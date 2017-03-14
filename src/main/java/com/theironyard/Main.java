@@ -1,5 +1,10 @@
 package com.theironyard;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.MonthDay;
+import java.time.format.DateTimeFormatter;
+
 /**
  * For this exercise you will be creating a new class, SignificantDate, that can
  * be used to calculate the days until a given date (such as Valentine's Day,
@@ -12,7 +17,7 @@ package com.theironyard;
 public class Main {
 
     public static void main(String[] args) {
-
+        MonthDay CHRIS_AANERUD_BIRTHDAY = MonthDay.of(Month.FEBRUARY, 23);
         /*
             In this main() method you should make use of your SignificantDate
             class. Use the next() method to find and print the next instance of
@@ -54,16 +59,21 @@ public class Main {
 
         // todo: create a new DateTimeFormatter in a variable named formatter
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+
 
         // todo: print the number of days to and the date of the next occurrence of a constant date defined in SignificantDate (other than leap year). EG: Valentines Day
 
+        System.out.printf("There are %s days until the next occurrence of Christmas on %s\n",
+                        SignificantDate.daysTo(SignificantDate.CHRISTMAS), formatter.format(SignificantDate.next(SignificantDate.CHRISTMAS)));
 
         // todo: print the number of days to and date of the next occurrence of leap year
-
+        System.out.printf("There are %s days until the next occurrence of Leap Year on %s\n",
+                        SignificantDate.daysTo(SignificantDate.LEAP_YEAR), formatter.format(SignificantDate.next(SignificantDate.LEAP_YEAR)));
 
         // todo: print the number of days to and date of any arbitrary MonthDate that is not defined as a constant in SignificantDate. EG: your birthday
-
-
+        System.out.printf("There are %s days until the next occurrence of Chris Aanerud's birthday on %s\n",
+                SignificantDate.daysTo(CHRIS_AANERUD_BIRTHDAY), formatter.format(SignificantDate.next(CHRIS_AANERUD_BIRTHDAY)));
     }
 
 }

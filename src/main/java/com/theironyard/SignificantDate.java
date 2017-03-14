@@ -1,13 +1,20 @@
 package com.theironyard;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.MonthDay;
+
+import static java.time.temporal.ChronoUnit.DAYS;
+
+
 /**
  * This class provides a set of static properties and methods used to calculate
  * when holidays and other significant dates fall and how many days there are
  * until the next occurrence.
- *
+ * <p>
  * As a part of this exercise you will have to make use of a number of classes
  * and enumerations in the java.time package.
- *
+ * <p>
  * Follow the instructions below to create the class.
  */
 public class SignificantDate {
@@ -18,65 +25,71 @@ public class SignificantDate {
      * property read only. Each of the properties will represent a month and
      * day without a year. Java provides a class named java.time.MonthDay which
      * meets this requirement.
-     *
+     * <p>
      * http://docs.oracle.com/javase/8/docs/api/java/time/MonthDay.html
-     *
+     * <p>
      * Create properties for at least the following dates:
-     *
+     * <p>
      * - New Years Day: January 1st
      * - Valentines Day: February 14th
      * - Leap Year: February 29th
      * - Fourth Of July: July 4th
      * - Christmas: December 25th
      * - New Years Eve: December 31st
-     *
+     * <p>
      * Be sure to give each of these properties a reasonable name that follows
      * convention. For example, GROUNDHOG_DAY.
-     *
+     * <p>
      * The MonthDay class is consistent with the rest of the java.time package
      * in that you can't simply create am instance using the new keyword.
      * Instead, you will need to use it's of() method:
-     *
+     * <p>
      * http://docs.oracle.com/javase/8/docs/api/java/time/MonthDay.html#of-java.time.Month-int-
-     *
+     * <p>
      * When setting the month for the new MonthDay, you are not allowed to use
      * the number of the month. EG, `MonthDay.of(12, 9)` is forbidden because
      * you explicitly used the number 12 for December. Instead, use the
      * java.time.Month enumeration. Enumerations are similar to classes, except
      * that they restrict values to a specific range. This enum has static
      * properties representing each month:
-     *
+     * <p>
      * http://docs.oracle.com/javase/8/docs/api/java/time/Month.html#enum.constant.summary
-     *
+     * <p>
      * Here's a allowable example for Groundhog Day:
-     *
+     * <p>
      * MonthDay.of(Month.FEBRUARY, 2);
      */
 
     // todo: create a New Years Day property
+    public static final MonthDay NEW_YEARS_DAY = MonthDay.of(Month.JANUARY, 1);
+
 
     // todo: create a Valentines Day property
 
+    public static final MonthDay VALENTINES_DAY = MonthDay.of(Month.FEBRUARY, 14);
     // todo: create a Leap Year property
-
+    public static final MonthDay LEAP_YEAR = MonthDay.of(Month.FEBRUARY, 29);
     // todo: create a Fourth of July property
-
+    public static final MonthDay FOURTH_OF_JULY = MonthDay.of(Month.JULY, 4);
     // todo: create a Christmas property
-
+    public static final MonthDay CHRISTMAS = MonthDay.of(Month.DECEMBER, 25);
     // todo: create a New Years Eve property
+    public static final MonthDay NEW_YEARS_EVE = MonthDay.of(Month.DECEMBER, 31);
 
     /**
      * The next() method returns a LocalDate object that represents the date of
      * the next occurrence of the specified MonthDay. For example, if today were
      * 1/3/2017, the next instance of New Years Day would be 1/1/2018. The next
      * occurrence of leap year would be 2/29/2014.
-     *
+     * <p>
      * This method should be static.
      *
      * @param date A month and day we're looking for the next occurrence of
      * @return The next occurrence of the specified date
      */
     // todo: Implement the next() method by following the instructions below
+    public static LocalDate next(MonthDay date) {
+
 
 
         /*
@@ -88,6 +101,7 @@ public class SignificantDate {
          */
         // todo: create a variable named now
 
+        LocalDate now = LocalDate.now();
 
         /*
             The LocalDate class has a method on it, getYear(), that will return
@@ -95,7 +109,7 @@ public class SignificantDate {
             "year".
          */
         // todo: create a variable named year
-
+        int year = now.getYear();
 
         /*
             Now that we know the year, we need to find the next valid occurrence
@@ -133,15 +147,18 @@ public class SignificantDate {
          */
         // todo: loop while the MonthDate is not valid for the specified year or the MonthDate for this year is not after today
 
+
+
+        while (!date.atYear(year).isAfter(now) || !date.isValidYear(year)) {
+
             // todo: increment the year variable so we can try the subsequent year
+            year = year + 1;
 
-
-
+        }
         // once you've found the next instance of the date, return it!
         // todo: return the next occurrence of the specified date
-
-
-
+        return date.atYear(year);
+    }
     /**
      * Create a static method name daysTo() that accepts a MonthDay argument
      * named date and returns a long representing the number of days to the next
@@ -154,6 +171,8 @@ public class SignificantDate {
      * @return The number of days until the specified date
      */
     // todo: create the daysTo() method
+public static long daysTo(MonthDay date) {
+
 
 
         /*
@@ -161,7 +180,9 @@ public class SignificantDate {
             occurrence of a specified date. Use that method to get the next
             occurrence of the MonthDay. Store this in a variable named nextDate.
          */
-        // todo: create nextDate variable and set it to the next instance of the date
+    // todo: create nextDate variable and set it to the next instance of the date
+
+    LocalDate nextDate = next(date);
 
 
         /*
@@ -180,9 +201,7 @@ public class SignificantDate {
 
             DAYS.between() returns a long.
          */
-        // todo: return the number of days between today and the nextDate
-
-
-
-
+    // todo: return the number of days between today and the nextDate
+return DAYS.between(LocalDate.now(), nextDate);
+    }
 }
